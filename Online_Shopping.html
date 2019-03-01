@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Online Shopping Lab</title>
+    <style>
+    </style>
+  </head>
+  <body>
+
+  <p></p>
+
+  <script>
+// Set up by the lab
+var cart = [];
+
+// Set up by the lab
+function getCart() {
+ return cart;
+}
+// Set up by the lab
+function setCart(c) {
+  cart = c;
+  return cart;
+}
+
+// Adds new food item to cart array with random price between 1 and 100
+function addToCart(food) {
+ cart.push({
+   itemName: food,
+   itemPrice: Math.floor((Math.random() * 100 + 1))
+   }
+ )
+ console.log(cart)
+   return `${food} has been added to your cart.`
+}
+
+// Allows shopper to view cart contents
+function viewCart() {
+  if (cart.length === 0) {
+  return "Your shopping cart is empty"
+  } else {
+    var viewCartArray = []
+    cart.forEach(function(element) {
+      viewCartArray.push(" " + element.itemName + " at $" + element.itemPrice)
+        })
+      console.log("In your cart, you have " + viewCartArray + ".")
+}
+}
+
+// Sums up the total cost of food items in cart
+function totalFunction() {
+  // Creates an empty array
+  var totalArray = []
+  finalSum = 0
+  // Loops over each element of the cart array
+  cart.forEach(function(element) {
+    // Pushes the price of each food item to the totalArray
+    totalArray.push(element.itemPrice)})
+    // Loops over each price and adds to finalSum
+    totalArray.forEach(function(prices) {
+      finalSum = finalSum + prices
+    }
+    )
+    return finalSum
+  }
+
+// Removed food items from the cart
+function removeFromCart(removedItem) {
+let n = ""
+var i;
+// checks if the item is in the cart
+for (i = 0; i < cart.length; i++) {
+  if (n === removedItem) { break; }
+    n  = cart[i].itemName;
+}
+// removes the item from the cart
+if (n === removedItem) {
+  cart.splice(i, 1);
+  return cart
+} else {
+  return "That item is not in your cart."
+}
+}
+
+
+function placeOrder(cardNumber) {
+ // if no argument received, the function should console.log "Sorry we don't have a credit card on file for you"
+ if (arguments.length === 0) {
+  console.log("Sorry, we don\'t have a credit card on file for you.")
+ // else if a cc # is recieved, the function should empty the cart array
+} else {
+  // empty the cart array
+  cart.length = 0
+  console.log(cart)
+  // then return the total cost + "which will be charged to" + the cardNumber
+  return `"The total cost is $${total}, which will be charged to ${cardNumber}."`
+}
+}
+
+addToCart("bananas")
+addToCart("eggs")
+addToCart("pears")
+addToCart("mangoes")
+addToCart("pancake batter")
+viewCart()
+total = totalFunction()
+removeFromCart("eggs")
+removeFromCart("apples")
+removeFromCart("bananas")
+removeFromCart("hearts")
+placeOrder()
+placeOrder(123456)
+
+    </script>
+
+  </body>
+</html>
