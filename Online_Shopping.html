@@ -24,32 +24,35 @@ function setCart(c) {
   return cart;
 }
 
-// Adds new food item to cart array with random price between 1 and 100
-function addToCart(food) {
- cart.push({
-   itemName: food,
-   itemPrice: Math.floor((Math.random() * 100 + 1))
-   }
- )
- console.log(cart)
-   return `${food} has been added to your cart.`
+//Adds new food item to cart array with random price between 1 and 100
+function addToCart(item) {
+cart.push({
+  itemName: item,
+  itemPrice: Math.floor((Math.random() * 100 + 1))
+}
+)
+console.log(cart)
+   return `${item} has been added to your cart.`
 }
 
 // Allows shopper to view cart contents
 function viewCart() {
+  var viewCartArray = []
+  cart.forEach(function(element) {
+    viewCartArray.push(" " + element.itemName + " at $" + element.itemPrice)
+  })
   if (cart.length === 0) {
-  return "Your shopping cart is empty"
+  return "Your shopping cart is empty."
+  } else if (cart.length === 1) {
+    return `In your cart, you have${viewCartArray}`
   } else {
-    var viewCartArray = []
-    cart.forEach(function(element) {
-      viewCartArray.push(" " + element.itemName + " at $" + element.itemPrice)
-        })
-      console.log("In your cart, you have " + viewCartArray + ".")
+        var lastElement = viewCartArray.pop()
+      return `In your cart, you have${viewCartArray}and${lastElement}`
 }
 }
 
 // Sums up the total cost of food items in cart
-function totalFunction() {
+function total() {
   // Creates an empty array
   var totalArray = []
   finalSum = 0
@@ -65,17 +68,16 @@ function totalFunction() {
     return finalSum
   }
 
-// Removed food items from the cart
-function removeFromCart(removedItem) {
+function removeFromCart(item) {
 let n = ""
 var i;
-// checks if the item is in the cart
 for (i = 0; i < cart.length; i++) {
-  if (n === removedItem) { break; }
+  if (cart[i].itemName === item) {
     n  = cart[i].itemName;
+    break;
+  }
 }
-// removes the item from the cart
-if (n === removedItem) {
+if (n === item) {
   cart.splice(i, 1);
   return cart
 } else {
@@ -91,10 +93,10 @@ function placeOrder(cardNumber) {
  // else if a cc # is recieved, the function should empty the cart array
 } else {
   // empty the cart array
+  const cartTotal = total()
   cart.length = 0
-  console.log(cart)
   // then return the total cost + "which will be charged to" + the cardNumber
-  return `"The total cost is $${total}, which will be charged to ${cardNumber}."`
+  return `Your total cost is $${total()}, which will be charged to ${cardNumber}.`
 }
 }
 
@@ -104,7 +106,7 @@ addToCart("pears")
 addToCart("mangoes")
 addToCart("pancake batter")
 viewCart()
-total = totalFunction()
+total()
 removeFromCart("eggs")
 removeFromCart("apples")
 removeFromCart("bananas")
